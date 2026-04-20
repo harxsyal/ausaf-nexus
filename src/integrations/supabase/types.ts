@@ -483,6 +483,10 @@ export type Database = {
       profile_label: { Args: { _user: string }; Returns: string }
       resolve_user_by_label: { Args: { _label: string }; Returns: string }
       touch_last_active: { Args: never; Returns: undefined }
+      user_has_asset: {
+        Args: { _asset: string; _user: string }
+        Returns: boolean
+      }
     }
     Enums: {
       account_status: "active" | "disabled"

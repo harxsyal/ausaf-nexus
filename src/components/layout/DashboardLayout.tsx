@@ -8,6 +8,7 @@ import {
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { NotificationBell } from "@/components/notifications/NotificationBell";
+import { ThemeToggle } from "@/components/theme/ThemeToggle";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 
 type NavItem = { label: string; path: string; icon: LucideIcon; allow: AppRole[] | "all" };
@@ -135,6 +136,7 @@ export const DashboardLayout = ({ children, title, dept }: { children: ReactNode
             </div>
             <div className="hidden lg:block h-8 w-px bg-border" />
             <div className="hidden lg:block text-xs font-mono text-muted-foreground tabular-nums">UTC {now}</div>
+            <ThemeToggle />
             <NotificationBell />
           </div>
         </header>
