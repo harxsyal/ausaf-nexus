@@ -157,14 +157,14 @@ const WebsiteDashboard = () => {
               {loading && (
                 <tr><td colSpan={8} className="px-4 py-8 text-center text-muted-foreground text-xs font-mono uppercase tracking-widest animate-pulse">Loading editorial queue…</td></tr>
               )}
-              {!loading && rows.length === 0 && (
+              {!loading && visible.length === 0 && (
                 <tr><td colSpan={8} className="px-4 py-12 text-center">
                   <FileText className="size-6 mx-auto text-muted-foreground mb-2 opacity-50" />
-                  <p className="text-sm text-muted-foreground">No articles yet.</p>
-                  <p className="text-[10px] font-mono text-muted-foreground uppercase tracking-widest mt-1">Use the quick actions above to start a draft.</p>
+                  <p className="text-sm text-muted-foreground">No articles match these filters.</p>
+                  <p className="text-[10px] font-mono text-muted-foreground uppercase tracking-widest mt-1">Adjust filters or dispatch a new draft.</p>
                 </td></tr>
               )}
-              {rows.map((r) => (
+              {visible.map((r) => (
                 <tr key={r.id} className="border-b border-border/50 hover:bg-secondary/40 transition-colors group">
                   <td className="px-4 py-4">
                     <p className="font-medium group-hover:text-primary transition-colors">{r.headline}</p>
