@@ -159,13 +159,19 @@ export type Database = {
           assigned_by: string | null
           assigned_to: string | null
           caption_draft: string | null
+          completed_at: string | null
+          completed_by: string | null
           created_at: string
           created_by: string | null
           deadline: string | null
           description: string | null
           editor: string | null
+          final_caption: string | null
+          final_publish_url: string | null
+          final_title: string | null
           id: string
           notes: string | null
+          posted_asset: string | null
           priority: Database["public"]["Enums"]["task_priority"]
           producer: string | null
           publish_title_draft: string | null
@@ -180,13 +186,19 @@ export type Database = {
           assigned_by?: string | null
           assigned_to?: string | null
           caption_draft?: string | null
+          completed_at?: string | null
+          completed_by?: string | null
           created_at?: string
           created_by?: string | null
           deadline?: string | null
           description?: string | null
           editor?: string | null
+          final_caption?: string | null
+          final_publish_url?: string | null
+          final_title?: string | null
           id?: string
           notes?: string | null
+          posted_asset?: string | null
           priority?: Database["public"]["Enums"]["task_priority"]
           producer?: string | null
           publish_title_draft?: string | null
@@ -201,13 +213,19 @@ export type Database = {
           assigned_by?: string | null
           assigned_to?: string | null
           caption_draft?: string | null
+          completed_at?: string | null
+          completed_by?: string | null
           created_at?: string
           created_by?: string | null
           deadline?: string | null
           description?: string | null
           editor?: string | null
+          final_caption?: string | null
+          final_publish_url?: string | null
+          final_title?: string | null
           id?: string
           notes?: string | null
+          posted_asset?: string | null
           priority?: Database["public"]["Enums"]["task_priority"]
           producer?: string | null
           publish_title_draft?: string | null
@@ -265,13 +283,19 @@ export type Database = {
           assigned_by: string | null
           assigned_to: string | null
           caption_draft: string | null
+          completed_at: string | null
+          completed_by: string | null
           created_at: string
           created_by: string | null
           deadline: string | null
           description: string | null
+          final_caption: string | null
+          final_publish_url: string | null
+          final_title: string | null
           id: string
           notes: string | null
           platform: Database["public"]["Enums"]["social_platform"]
+          posted_asset: string | null
           priority: Database["public"]["Enums"]["task_priority"]
           publish_title_draft: string | null
           source: string | null
@@ -285,13 +309,19 @@ export type Database = {
           assigned_by?: string | null
           assigned_to?: string | null
           caption_draft?: string | null
+          completed_at?: string | null
+          completed_by?: string | null
           created_at?: string
           created_by?: string | null
           deadline?: string | null
           description?: string | null
+          final_caption?: string | null
+          final_publish_url?: string | null
+          final_title?: string | null
           id?: string
           notes?: string | null
           platform: Database["public"]["Enums"]["social_platform"]
+          posted_asset?: string | null
           priority?: Database["public"]["Enums"]["task_priority"]
           publish_title_draft?: string | null
           source?: string | null
@@ -305,13 +335,19 @@ export type Database = {
           assigned_by?: string | null
           assigned_to?: string | null
           caption_draft?: string | null
+          completed_at?: string | null
+          completed_by?: string | null
           created_at?: string
           created_by?: string | null
           deadline?: string | null
           description?: string | null
+          final_caption?: string | null
+          final_publish_url?: string | null
+          final_title?: string | null
           id?: string
           notes?: string | null
           platform?: Database["public"]["Enums"]["social_platform"]
+          posted_asset?: string | null
           priority?: Database["public"]["Enums"]["task_priority"]
           publish_title_draft?: string | null
           source?: string | null
@@ -521,15 +557,21 @@ export type Database = {
           assigned_to: string | null
           caption_draft: string | null
           category: string | null
+          completed_at: string | null
+          completed_by: string | null
           created_at: string
           created_by: string | null
           deadline: string | null
           description: string | null
           editor: string | null
+          final_caption: string | null
+          final_publish_url: string | null
+          final_title: string | null
           headline: string
           id: string
           language: Database["public"]["Enums"]["web_language"]
           notes: string | null
+          posted_asset: string | null
           priority: Database["public"]["Enums"]["task_priority"]
           publish_title_draft: string | null
           site: string | null
@@ -545,15 +587,21 @@ export type Database = {
           assigned_to?: string | null
           caption_draft?: string | null
           category?: string | null
+          completed_at?: string | null
+          completed_by?: string | null
           created_at?: string
           created_by?: string | null
           deadline?: string | null
           description?: string | null
           editor?: string | null
+          final_caption?: string | null
+          final_publish_url?: string | null
+          final_title?: string | null
           headline: string
           id?: string
           language?: Database["public"]["Enums"]["web_language"]
           notes?: string | null
+          posted_asset?: string | null
           priority?: Database["public"]["Enums"]["task_priority"]
           publish_title_draft?: string | null
           site?: string | null
@@ -569,15 +617,21 @@ export type Database = {
           assigned_to?: string | null
           caption_draft?: string | null
           category?: string | null
+          completed_at?: string | null
+          completed_by?: string | null
           created_at?: string
           created_by?: string | null
           deadline?: string | null
           description?: string | null
           editor?: string | null
+          final_caption?: string | null
+          final_publish_url?: string | null
+          final_title?: string | null
           headline?: string
           id?: string
           language?: Database["public"]["Enums"]["web_language"]
           notes?: string | null
+          posted_asset?: string | null
           priority?: Database["public"]["Enums"]["task_priority"]
           publish_title_draft?: string | null
           site?: string | null
