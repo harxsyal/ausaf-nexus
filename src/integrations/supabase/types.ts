@@ -107,12 +107,64 @@ export type Database = {
         }
         Relationships: []
       }
+      website_tasks: {
+        Row: {
+          article_type: Database["public"]["Enums"]["web_article_type"]
+          category: string | null
+          created_at: string
+          created_by: string | null
+          deadline: string | null
+          editor: string | null
+          headline: string
+          id: string
+          language: Database["public"]["Enums"]["web_language"]
+          notes: string | null
+          status: Database["public"]["Enums"]["web_task_status"]
+          updated_at: string
+          url: string | null
+          writer: string | null
+        }
+        Insert: {
+          article_type?: Database["public"]["Enums"]["web_article_type"]
+          category?: string | null
+          created_at?: string
+          created_by?: string | null
+          deadline?: string | null
+          editor?: string | null
+          headline: string
+          id?: string
+          language?: Database["public"]["Enums"]["web_language"]
+          notes?: string | null
+          status?: Database["public"]["Enums"]["web_task_status"]
+          updated_at?: string
+          url?: string | null
+          writer?: string | null
+        }
+        Update: {
+          article_type?: Database["public"]["Enums"]["web_article_type"]
+          category?: string | null
+          created_at?: string
+          created_by?: string | null
+          deadline?: string | null
+          editor?: string | null
+          headline?: string
+          id?: string
+          language?: Database["public"]["Enums"]["web_language"]
+          notes?: string | null
+          status?: Database["public"]["Enums"]["web_task_status"]
+          updated_at?: string
+          url?: string | null
+          writer?: string | null
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
       can_access_social: { Args: { _user: string }; Returns: boolean }
+      can_access_website: { Args: { _user: string }; Returns: boolean }
       get_user_role: {
         Args: { _user_id: string }
         Returns: Database["public"]["Enums"]["app_role"]
@@ -136,6 +188,9 @@ export type Database = {
         | "delayed"
       social_task_type: "post" | "poster" | "reel" | "breaking"
       task_priority: "low" | "medium" | "high" | "urgent"
+      web_article_type: "news" | "original" | "postcard"
+      web_language: "urdu" | "english" | "other"
+      web_task_status: "draft" | "in_review" | "ready" | "published" | "delayed"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -274,6 +329,9 @@ export const Constants = {
       ],
       social_task_type: ["post", "poster", "reel", "breaking"],
       task_priority: ["low", "medium", "high", "urgent"],
+      web_article_type: ["news", "original", "postcard"],
+      web_language: ["urdu", "english", "other"],
+      web_task_status: ["draft", "in_review", "ready", "published", "delayed"],
     },
   },
 } as const
