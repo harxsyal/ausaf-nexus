@@ -38,6 +38,54 @@ export type Database = {
         }
         Relationships: []
       }
+      social_tasks: {
+        Row: {
+          asset_page: string | null
+          assigned_to: string | null
+          created_at: string
+          created_by: string | null
+          deadline: string | null
+          id: string
+          notes: string | null
+          platform: Database["public"]["Enums"]["social_platform"]
+          priority: Database["public"]["Enums"]["task_priority"]
+          status: Database["public"]["Enums"]["social_task_status"]
+          task_type: Database["public"]["Enums"]["social_task_type"]
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          asset_page?: string | null
+          assigned_to?: string | null
+          created_at?: string
+          created_by?: string | null
+          deadline?: string | null
+          id?: string
+          notes?: string | null
+          platform: Database["public"]["Enums"]["social_platform"]
+          priority?: Database["public"]["Enums"]["task_priority"]
+          status?: Database["public"]["Enums"]["social_task_status"]
+          task_type?: Database["public"]["Enums"]["social_task_type"]
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          asset_page?: string | null
+          assigned_to?: string | null
+          created_at?: string
+          created_by?: string | null
+          deadline?: string | null
+          id?: string
+          notes?: string | null
+          platform?: Database["public"]["Enums"]["social_platform"]
+          priority?: Database["public"]["Enums"]["task_priority"]
+          status?: Database["public"]["Enums"]["social_task_status"]
+          task_type?: Database["public"]["Enums"]["social_task_type"]
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       user_roles: {
         Row: {
           created_at: string
@@ -64,6 +112,7 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      can_access_social: { Args: { _user: string }; Returns: boolean }
       get_user_role: {
         Args: { _user_id: string }
         Returns: Database["public"]["Enums"]["app_role"]
@@ -78,6 +127,15 @@ export type Database = {
     }
     Enums: {
       app_role: "super_admin" | "social_media" | "website" | "production"
+      social_platform: "facebook" | "youtube" | "instagram" | "tiktok" | "x"
+      social_task_status:
+        | "pending"
+        | "in_progress"
+        | "ready"
+        | "published"
+        | "delayed"
+      social_task_type: "post" | "poster" | "reel" | "breaking"
+      task_priority: "low" | "medium" | "high" | "urgent"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -206,6 +264,16 @@ export const Constants = {
   public: {
     Enums: {
       app_role: ["super_admin", "social_media", "website", "production"],
+      social_platform: ["facebook", "youtube", "instagram", "tiktok", "x"],
+      social_task_status: [
+        "pending",
+        "in_progress",
+        "ready",
+        "published",
+        "delayed",
+      ],
+      social_task_type: ["post", "poster", "reel", "breaking"],
+      task_priority: ["low", "medium", "high", "urgent"],
     },
   },
 } as const
