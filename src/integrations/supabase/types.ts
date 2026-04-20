@@ -691,6 +691,10 @@ export type Database = {
       can_access_production: { Args: { _user: string }; Returns: boolean }
       can_access_social: { Args: { _user: string }; Returns: boolean }
       can_access_website: { Args: { _user: string }; Returns: boolean }
+      dashboard_admin: { Args: never; Returns: Json }
+      dashboard_production: { Args: never; Returns: Json }
+      dashboard_social: { Args: never; Returns: Json }
+      dashboard_website: { Args: never; Returns: Json }
       get_user_job_roles: {
         Args: { _user_id: string }
         Returns: Database["public"]["Enums"]["job_role"][]
