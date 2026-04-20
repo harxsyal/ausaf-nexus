@@ -14,6 +14,54 @@ export type Database = {
   }
   public: {
     Tables: {
+      production_tasks: {
+        Row: {
+          created_at: string
+          created_by: string | null
+          deadline: string | null
+          editor: string | null
+          id: string
+          notes: string | null
+          producer: string | null
+          reporter: string | null
+          source: string | null
+          stage: Database["public"]["Enums"]["production_stage"]
+          target_platform: string | null
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          created_by?: string | null
+          deadline?: string | null
+          editor?: string | null
+          id?: string
+          notes?: string | null
+          producer?: string | null
+          reporter?: string | null
+          source?: string | null
+          stage?: Database["public"]["Enums"]["production_stage"]
+          target_platform?: string | null
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          created_by?: string | null
+          deadline?: string | null
+          editor?: string | null
+          id?: string
+          notes?: string | null
+          producer?: string | null
+          reporter?: string | null
+          source?: string | null
+          stage?: Database["public"]["Enums"]["production_stage"]
+          target_platform?: string | null
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           created_at: string
@@ -163,6 +211,7 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      can_access_production: { Args: { _user: string }; Returns: boolean }
       can_access_social: { Args: { _user: string }; Returns: boolean }
       can_access_website: { Args: { _user: string }; Returns: boolean }
       get_user_role: {
@@ -179,6 +228,15 @@ export type Database = {
     }
     Enums: {
       app_role: "super_admin" | "social_media" | "website" | "production"
+      production_stage:
+        | "idea_received"
+        | "researching"
+        | "shooting"
+        | "voice_over"
+        | "editing"
+        | "ready"
+        | "scheduled"
+        | "published"
       social_platform: "facebook" | "youtube" | "instagram" | "tiktok" | "x"
       social_task_status:
         | "pending"
@@ -319,6 +377,16 @@ export const Constants = {
   public: {
     Enums: {
       app_role: ["super_admin", "social_media", "website", "production"],
+      production_stage: [
+        "idea_received",
+        "researching",
+        "shooting",
+        "voice_over",
+        "editing",
+        "ready",
+        "scheduled",
+        "published",
+      ],
       social_platform: ["facebook", "youtube", "instagram", "tiktok", "x"],
       social_task_status: [
         "pending",
