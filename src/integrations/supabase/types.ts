@@ -134,6 +134,111 @@ export type Database = {
         }
         Relationships: []
       }
+      task_comments: {
+        Row: {
+          author_id: string | null
+          author_label: string | null
+          body: string
+          created_at: string
+          id: string
+          task_dept: Database["public"]["Enums"]["task_dept"]
+          task_id: string
+          updated_at: string
+        }
+        Insert: {
+          author_id?: string | null
+          author_label?: string | null
+          body: string
+          created_at?: string
+          id?: string
+          task_dept: Database["public"]["Enums"]["task_dept"]
+          task_id: string
+          updated_at?: string
+        }
+        Update: {
+          author_id?: string | null
+          author_label?: string | null
+          body?: string
+          created_at?: string
+          id?: string
+          task_dept?: Database["public"]["Enums"]["task_dept"]
+          task_id?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      task_events: {
+        Row: {
+          actor_id: string | null
+          actor_label: string | null
+          created_at: string
+          event_type: string
+          id: string
+          summary: string
+          task_dept: Database["public"]["Enums"]["task_dept"]
+          task_id: string
+        }
+        Insert: {
+          actor_id?: string | null
+          actor_label?: string | null
+          created_at?: string
+          event_type: string
+          id?: string
+          summary: string
+          task_dept: Database["public"]["Enums"]["task_dept"]
+          task_id: string
+        }
+        Update: {
+          actor_id?: string | null
+          actor_label?: string | null
+          created_at?: string
+          event_type?: string
+          id?: string
+          summary?: string
+          task_dept?: Database["public"]["Enums"]["task_dept"]
+          task_id?: string
+        }
+        Relationships: []
+      }
+      task_proof: {
+        Row: {
+          caption: string | null
+          created_at: string
+          id: string
+          published_at: string | null
+          screenshot_path: string | null
+          submitted_by: string | null
+          task_dept: Database["public"]["Enums"]["task_dept"]
+          task_id: string
+          updated_at: string
+          url: string | null
+        }
+        Insert: {
+          caption?: string | null
+          created_at?: string
+          id?: string
+          published_at?: string | null
+          screenshot_path?: string | null
+          submitted_by?: string | null
+          task_dept: Database["public"]["Enums"]["task_dept"]
+          task_id: string
+          updated_at?: string
+          url?: string | null
+        }
+        Update: {
+          caption?: string | null
+          created_at?: string
+          id?: string
+          published_at?: string | null
+          screenshot_path?: string | null
+          submitted_by?: string | null
+          task_dept?: Database["public"]["Enums"]["task_dept"]
+          task_id?: string
+          updated_at?: string
+          url?: string | null
+        }
+        Relationships: []
+      }
       user_roles: {
         Row: {
           created_at: string
@@ -211,6 +316,10 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      can_access_dept: {
+        Args: { _dept: Database["public"]["Enums"]["task_dept"]; _user: string }
+        Returns: boolean
+      }
       can_access_production: { Args: { _user: string }; Returns: boolean }
       can_access_social: { Args: { _user: string }; Returns: boolean }
       can_access_website: { Args: { _user: string }; Returns: boolean }
@@ -245,6 +354,7 @@ export type Database = {
         | "published"
         | "delayed"
       social_task_type: "post" | "poster" | "reel" | "breaking"
+      task_dept: "social" | "website" | "production"
       task_priority: "low" | "medium" | "high" | "urgent"
       web_article_type: "news" | "original" | "postcard"
       web_language: "urdu" | "english" | "other"
@@ -396,6 +506,7 @@ export const Constants = {
         "delayed",
       ],
       social_task_type: ["post", "poster", "reel", "breaking"],
+      task_dept: ["social", "website", "production"],
       task_priority: ["low", "medium", "high", "urgent"],
       web_article_type: ["news", "original", "postcard"],
       web_language: ["urdu", "english", "other"],
