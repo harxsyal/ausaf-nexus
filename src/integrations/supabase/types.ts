@@ -666,6 +666,10 @@ export type Database = {
         }
         Returns: boolean
       }
+      is_valid_status_transition: {
+        Args: { _from: string; _to: string }
+        Returns: boolean
+      }
       mark_all_notifications_read: { Args: never; Returns: undefined }
       profile_label: { Args: { _user: string }; Returns: string }
       resolve_user_by_label: { Args: { _label: string }; Returns: string }
@@ -712,6 +716,12 @@ export type Database = {
         | "ready"
         | "scheduled"
         | "published"
+        | "pending"
+        | "assigned"
+        | "in_progress"
+        | "delayed"
+        | "rejected"
+        | "archived"
       social_platform: "facebook" | "youtube" | "instagram" | "tiktok" | "x"
       social_task_status:
         | "pending"
@@ -719,13 +729,26 @@ export type Database = {
         | "ready"
         | "published"
         | "delayed"
+        | "assigned"
+        | "rejected"
+        | "archived"
       social_task_type: "post" | "poster" | "reel" | "breaking"
       task_dept: "social" | "website" | "production"
       task_priority: "low" | "medium" | "high" | "urgent"
       warning_severity: "info" | "minor" | "major" | "critical"
       web_article_type: "news" | "original" | "postcard"
       web_language: "urdu" | "english" | "other"
-      web_task_status: "draft" | "in_review" | "ready" | "published" | "delayed"
+      web_task_status:
+        | "draft"
+        | "in_review"
+        | "ready"
+        | "published"
+        | "delayed"
+        | "pending"
+        | "assigned"
+        | "in_progress"
+        | "rejected"
+        | "archived"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -892,6 +915,12 @@ export const Constants = {
         "ready",
         "scheduled",
         "published",
+        "pending",
+        "assigned",
+        "in_progress",
+        "delayed",
+        "rejected",
+        "archived",
       ],
       social_platform: ["facebook", "youtube", "instagram", "tiktok", "x"],
       social_task_status: [
@@ -900,6 +929,9 @@ export const Constants = {
         "ready",
         "published",
         "delayed",
+        "assigned",
+        "rejected",
+        "archived",
       ],
       social_task_type: ["post", "poster", "reel", "breaking"],
       task_dept: ["social", "website", "production"],
@@ -907,7 +939,18 @@ export const Constants = {
       warning_severity: ["info", "minor", "major", "critical"],
       web_article_type: ["news", "original", "postcard"],
       web_language: ["urdu", "english", "other"],
-      web_task_status: ["draft", "in_review", "ready", "published", "delayed"],
+      web_task_status: [
+        "draft",
+        "in_review",
+        "ready",
+        "published",
+        "delayed",
+        "pending",
+        "assigned",
+        "in_progress",
+        "rejected",
+        "archived",
+      ],
     },
   },
 } as const
