@@ -159,7 +159,7 @@ const AdminDashboard = () => {
   return (
     <DashboardLayout dept="Super Admin" title="Newsroom Command Center">
       <StatsGrid stats={stats.slice(0, 4)} />
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-px bg-border border border-border">
+      <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-px bg-border border border-border">
         <StatCardInline label="Employees Active" value={String(employeeCount)} tone="green" />
         <StatCardInline label="Social Tasks" value={String(byDept.find(d=>d.dept==="Social")?.count ?? 0)} tone="muted" />
         <StatCardInline label="Website Tasks" value={String(byDept.find(d=>d.dept==="Website")?.count ?? 0)} tone="muted" />
@@ -167,7 +167,7 @@ const AdminDashboard = () => {
       </div>
 
       {/* Charts row */}
-      <section className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+      <section className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
         <ChartCard title="Tasks by Department">
           <ResponsiveContainer width="100%" height={220}>
             <BarChart data={byDept}>
@@ -217,7 +217,7 @@ const AdminDashboard = () => {
       </section>
 
       {/* Tables row */}
-      <section className="grid grid-cols-1 xl:grid-cols-3 gap-4">
+      <section className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
         <DataPanel title="Urgent Tasks" icon={AlertTriangle} accent="text-signal-red">
           {urgent.length === 0 ? <Empty label="Nothing urgent. Stay frosty." /> :
             urgent.map((t) => (
@@ -276,9 +276,9 @@ const fmt = (iso: string | null) => {
 };
 
 const StatCardInline = ({ label, value, tone }: { label: string; value: string; tone: "green"|"red"|"amber"|"muted" }) => (
-  <div className="bg-surface p-5">
-    <p className="text-[10px] font-mono text-muted-foreground uppercase tracking-widest mb-2">{label}</p>
-    <span className={cn("text-2xl font-light tabular-nums tracking-tight",
+  <div className="bg-surface p-4 sm:p-5">
+    <p className="text-[10px] font-mono text-muted-foreground uppercase tracking-widest mb-2 line-clamp-1">{label}</p>
+    <span className={cn("text-2xl sm:text-3xl font-light tabular-nums tracking-tight",
       tone === "green" && "text-signal-green",
       tone === "amber" && "text-signal-amber",
       tone === "red" && "text-signal-red",
