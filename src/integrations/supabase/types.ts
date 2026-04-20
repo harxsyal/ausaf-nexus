@@ -76,6 +76,36 @@ export type Database = {
         }
         Relationships: []
       }
+      departments: {
+        Row: {
+          code: string
+          created_at: string
+          description: string | null
+          id: string
+          is_active: boolean
+          name: string
+          updated_at: string
+        }
+        Insert: {
+          code: string
+          created_at?: string
+          description?: string | null
+          id?: string
+          is_active?: boolean
+          name: string
+          updated_at?: string
+        }
+        Update: {
+          code?: string
+          created_at?: string
+          description?: string | null
+          id?: string
+          is_active?: boolean
+          name?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       notifications: {
         Row: {
           body: string | null
@@ -376,6 +406,51 @@ export type Database = {
         }
         Relationships: []
       }
+      warnings_logs: {
+        Row: {
+          acknowledged_at: string | null
+          created_at: string
+          details: string | null
+          id: string
+          issued_by: string | null
+          reason: string
+          related_dept: Database["public"]["Enums"]["task_dept"] | null
+          related_task_id: string | null
+          resolved_at: string | null
+          severity: Database["public"]["Enums"]["warning_severity"]
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          acknowledged_at?: string | null
+          created_at?: string
+          details?: string | null
+          id?: string
+          issued_by?: string | null
+          reason: string
+          related_dept?: Database["public"]["Enums"]["task_dept"] | null
+          related_task_id?: string | null
+          resolved_at?: string | null
+          severity?: Database["public"]["Enums"]["warning_severity"]
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          acknowledged_at?: string | null
+          created_at?: string
+          details?: string | null
+          id?: string
+          issued_by?: string | null
+          reason?: string
+          related_dept?: Database["public"]["Enums"]["task_dept"] | null
+          related_task_id?: string | null
+          resolved_at?: string | null
+          severity?: Database["public"]["Enums"]["warning_severity"]
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       website_tasks: {
         Row: {
           article_type: Database["public"]["Enums"]["web_article_type"]
@@ -517,6 +592,7 @@ export type Database = {
       social_task_type: "post" | "poster" | "reel" | "breaking"
       task_dept: "social" | "website" | "production"
       task_priority: "low" | "medium" | "high" | "urgent"
+      warning_severity: "info" | "minor" | "major" | "critical"
       web_article_type: "news" | "original" | "postcard"
       web_language: "urdu" | "english" | "other"
       web_task_status: "draft" | "in_review" | "ready" | "published" | "delayed"
@@ -678,6 +754,7 @@ export const Constants = {
       social_task_type: ["post", "poster", "reel", "breaking"],
       task_dept: ["social", "website", "production"],
       task_priority: ["low", "medium", "high", "urgent"],
+      warning_severity: ["info", "minor", "major", "critical"],
       web_article_type: ["news", "original", "postcard"],
       web_language: ["urdu", "english", "other"],
       web_task_status: ["draft", "in_review", "ready", "published", "delayed"],
