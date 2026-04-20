@@ -13,8 +13,20 @@ export default {
       },
     },
     extend: {
+      fontFamily: {
+        sans: ['Inter', 'system-ui', 'sans-serif'],
+        mono: ['IBM Plex Mono', 'monospace'],
+      },
       colors: {
         border: "hsl(var(--border))",
+        surface: "hsl(var(--surface))",
+        "surface-elevated": "hsl(var(--surface-elevated))",
+        signal: {
+          green: "hsl(var(--signal-green))",
+          amber: "hsl(var(--signal-amber))",
+          red: "hsl(var(--signal-red))",
+          blue: "hsl(var(--signal-blue))",
+        },
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
         background: "hsl(var(--background))",
