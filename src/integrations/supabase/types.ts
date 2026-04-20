@@ -666,6 +666,10 @@ export type Database = {
         }
         Returns: boolean
       }
+      is_valid_status_transition: {
+        Args: { _from: string; _to: string }
+        Returns: boolean
+      }
       mark_all_notifications_read: { Args: never; Returns: undefined }
       profile_label: { Args: { _user: string }; Returns: string }
       resolve_user_by_label: { Args: { _label: string }; Returns: string }
