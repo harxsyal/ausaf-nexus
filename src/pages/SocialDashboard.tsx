@@ -5,9 +5,10 @@ import { supabase } from "@/integrations/supabase/client";
 import { CreateSocialTaskDialog, SocialPlatform, SocialTaskType, TaskPriority }
   from "@/components/social/CreateSocialTaskDialog";
 import { Facebook, Youtube, Instagram, Music2, Hash, Newspaper, Image as ImgIcon,
-  Film, Megaphone, FileText, Filter as FilterIcon } from "lucide-react";
+  Film, Megaphone, FileText } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { toast } from "sonner";
+import { TaskFilterBar, TaskFilters, applyTaskFilters } from "@/components/filters/TaskFilterBar";
 
 interface Row {
   id: string; title: string; task_type: SocialTaskType; platform: SocialPlatform;
