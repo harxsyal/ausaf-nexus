@@ -125,32 +125,31 @@ const SocialDashboard = () => {
         ))}
       </section>
 
-      {/* Filter row */}
-      <section className="flex flex-wrap items-center gap-2">
-        <span className="inline-flex items-center gap-1.5 text-[10px] font-mono uppercase tracking-widest text-muted-foreground mr-2">
-          <FilterIcon className="size-3" /> Platform
-        </span>
-        {PLATFORMS.map((p) => {
-          const active = filters.has(p.key);
-          return (
-            <button key={p.key} onClick={() => togglePlatform(p.key)}
-              className={cn(
-                "inline-flex items-center gap-2 px-3 py-1.5 text-xs font-medium border transition-colors",
-                active
-                  ? "bg-primary text-primary-foreground border-primary"
-                  : "bg-surface text-muted-foreground border-border hover:text-foreground hover:border-foreground/40"
-              )}>
-              <p.icon className="size-3.5" /> {p.label}
-            </button>
-          );
-        })}
-        {filters.size > 0 && (
-          <button onClick={() => setFilters(new Set())}
-            className="ml-2 text-[10px] font-mono uppercase tracking-widest text-muted-foreground hover:text-foreground">
-            Clear
-          </button>
-        )}
-      </section>
+      {/* Filters */}
+      <TaskFilterBar
+        value={filters}
+        onChange={setFilters}
+        show={{ department: false, contentType: true }}
+        options={{
+          statuses: [
+            { value: "pending", label: "Pending" },
+            { value: "in_progress", label: "In Progress" },
+            { value: "ready", label: "Ready" },
+            { value: "published", label: "Published" },
+            { value: "delayed", label: "Delayed" },
+          ],
+          employees: employeeOptions,
+          assets: assetOptions,
+          platforms: PLATFORMS.map((p) => ({ value: p.key, label: p.label })),
+          priorities: [
+            { value: "low", label: "Low" },
+            { value: "medium", label: "Medium" },
+            { value: "high", label: "High" },
+            { value: "urgent", label: "Urgent" },
+          ],
+          contentTypes: QUICK.map((q) => ({ value: q.type, label: q.type })),
+        }}
+      />
 
       {/* Task table */}
       <section className="space-y-3">
