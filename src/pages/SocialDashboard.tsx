@@ -54,7 +54,7 @@ const fmtDeadline = (iso: string | null) => {
 
 const SocialDashboard = () => {
   const [rows, setRows] = useState<Row[]>([]);
-  const [filters, setFilters] = useState<Set<SocialPlatform>>(new Set());
+  const [filters, setFilters] = useState<TaskFilters>({});
   const [dialogOpen, setDialogOpen] = useState(false);
   const [dialogType, setDialogType] = useState<SocialTaskType>("post");
   const [loading, setLoading] = useState(true);
@@ -72,16 +72,25 @@ const SocialDashboard = () => {
 
   useEffect(() => { load(); }, []);
 
-  const togglePlatform = (p: SocialPlatform) => {
-    const next = new Set(filters);
-    next.has(p) ? next.delete(p) : next.add(p);
-    setFilters(next);
-  };
+  const visible = useMemo(() => applyTaskFilters(rows, filters, {
+    status: (r) => r.status,
+    employee: (r) => r.assigned_to,
+    asset: (r) => r.asset_page,
+    platform: (r) => r.platform,
+    priority: (r) => r.priority,
+    contentType: (r) => r.task_type,
+    deadline: (r) => r.deadline,
+  }), [rows, filters]);
 
-  const visible = useMemo(
-    () => filters.size === 0 ? rows : rows.filter((r) => filters.has(r.platform)),
-    [rows, filters]
-  );
+  const employeeOptions = useMemo(() => {
+    const ids = new Set(rows.map((r) => r.assigned_to).filter((x): x is string => !!x));
+    return Array.from(ids).map((id) => ({ value: id, label: id.slice(0, 8) + "…" }));
+  }, [rows]);
+
+  const assetOptions = useMemo(() => {
+    const a = new Set(rows.map((r) => r.asset_page).filter((x): x is string => !!x));
+    return Array.from(a).map((v) => ({ value: v, label: v }));
+  }, [rows]);
 
   const now = Date.now();
   const stats = useMemo(() => {
