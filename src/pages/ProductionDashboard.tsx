@@ -116,6 +116,19 @@ const ProductionDashboard = () => {
         </button>
       </div>
 
+      {/* Filters */}
+      <TaskFilterBar
+        value={filters}
+        onChange={setFilters}
+        show={{ department: false, priority: false, contentType: false }}
+        options={{
+          statuses: COLUMNS.map((c) => ({ value: c.stage, label: c.label })),
+          employees: employeeOpts,
+          assets: platformOpts,
+          platforms: platformOpts,
+        }}
+      />
+
       {/* Kanban board */}
       <div className="-mx-4 sm:-mx-6 lg:-mx-8 px-4 sm:px-6 lg:px-8 overflow-x-auto pb-4">
         <div className="flex gap-4 min-w-max">
