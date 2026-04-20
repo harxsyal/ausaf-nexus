@@ -72,6 +72,25 @@ const WebsiteDashboard = () => {
 
   const openDialog = (t: WebArticleType) => { setDialogType(t); setDialogOpen(true); };
 
+  const visible = useMemo(() => applyTaskFilters(rows, filters, {
+    status: (r) => r.status,
+    employee: (r) => r.writer || r.editor,
+    asset: (r) => r.category,
+    contentType: (r) => r.article_type,
+    deadline: (r) => r.deadline,
+  }), [rows, filters]);
+
+  const employeeOpts = useMemo(() => {
+    const s = new Set<string>();
+    rows.forEach((r) => { if (r.writer) s.add(r.writer); if (r.editor) s.add(r.editor); });
+    return Array.from(s).map((v) => ({ value: v, label: v }));
+  }, [rows]);
+
+  const categoryOpts = useMemo(() => {
+    const s = new Set(rows.map((r) => r.category).filter((x): x is string => !!x));
+    return Array.from(s).map((v) => ({ value: v, label: v }));
+  }, [rows]);
+
   return (
     <DashboardLayout dept="Website Desk" title="Editorial & Publishing Pipeline">
       <StatsGrid stats={stats} />
