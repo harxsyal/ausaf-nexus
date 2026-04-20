@@ -43,6 +43,7 @@ export type Database = {
       assets: {
         Row: {
           brand: string | null
+          category: string | null
           created_at: string
           created_by: string | null
           id: string
@@ -50,10 +51,12 @@ export type Database = {
           notes: string | null
           platform: string | null
           status: Database["public"]["Enums"]["asset_status"]
+          tags: string[]
           updated_at: string
         }
         Insert: {
           brand?: string | null
+          category?: string | null
           created_at?: string
           created_by?: string | null
           id?: string
@@ -61,10 +64,12 @@ export type Database = {
           notes?: string | null
           platform?: string | null
           status?: Database["public"]["Enums"]["asset_status"]
+          tags?: string[]
           updated_at?: string
         }
         Update: {
           brand?: string | null
+          category?: string | null
           created_at?: string
           created_by?: string | null
           id?: string
@@ -72,6 +77,7 @@ export type Database = {
           notes?: string | null
           platform?: string | null
           status?: Database["public"]["Enums"]["asset_status"]
+          tags?: string[]
           updated_at?: string
         }
         Relationships: []
@@ -199,6 +205,7 @@ export type Database = {
       profiles: {
         Row: {
           allowed_assets: string[]
+          allowed_categories: string[]
           created_at: string
           department: string | null
           full_name: string | null
@@ -210,6 +217,7 @@ export type Database = {
         }
         Insert: {
           allowed_assets?: string[]
+          allowed_categories?: string[]
           created_at?: string
           department?: string | null
           full_name?: string | null
@@ -221,6 +229,7 @@ export type Database = {
         }
         Update: {
           allowed_assets?: string[]
+          allowed_categories?: string[]
           created_at?: string
           department?: string | null
           full_name?: string | null
@@ -484,6 +493,7 @@ export type Database = {
           id: string
           language: Database["public"]["Enums"]["web_language"]
           notes: string | null
+          site: string | null
           status: Database["public"]["Enums"]["web_task_status"]
           updated_at: string
           url: string | null
@@ -500,6 +510,7 @@ export type Database = {
           id?: string
           language?: Database["public"]["Enums"]["web_language"]
           notes?: string | null
+          site?: string | null
           status?: Database["public"]["Enums"]["web_task_status"]
           updated_at?: string
           url?: string | null
@@ -516,6 +527,7 @@ export type Database = {
           id?: string
           language?: Database["public"]["Enums"]["web_language"]
           notes?: string | null
+          site?: string | null
           status?: Database["public"]["Enums"]["web_task_status"]
           updated_at?: string
           url?: string | null
