@@ -731,6 +731,7 @@ export type Database = {
       mark_all_notifications_read: { Args: never; Returns: undefined }
       profile_label: { Args: { _user: string }; Returns: string }
       resolve_user_by_label: { Args: { _label: string }; Returns: string }
+      scan_task_deadlines: { Args: never; Returns: undefined }
       touch_last_active: { Args: never; Returns: undefined }
       user_has_asset: {
         Args: { _asset: string; _user: string }
