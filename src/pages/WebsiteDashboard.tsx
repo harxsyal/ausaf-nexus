@@ -111,6 +111,29 @@ const WebsiteDashboard = () => {
         ))}
       </section>
 
+      {/* Filters */}
+      <TaskFilterBar
+        value={filters}
+        onChange={setFilters}
+        show={{ department: false, platform: false, priority: false }}
+        options={{
+          statuses: [
+            { value: "draft", label: "Draft" },
+            { value: "in_review", label: "In Review" },
+            { value: "ready", label: "Ready" },
+            { value: "published", label: "Published" },
+            { value: "delayed", label: "Delayed" },
+          ],
+          employees: employeeOpts,
+          assets: categoryOpts,
+          contentTypes: [
+            { value: "news", label: "News" },
+            { value: "original", label: "Original" },
+            { value: "postcard", label: "Postcard" },
+          ],
+        }}
+      />
+
       {/* Table */}
       <section className="space-y-3">
         <h2 className="text-xs font-mono font-medium text-muted-foreground uppercase tracking-[0.2em]">
