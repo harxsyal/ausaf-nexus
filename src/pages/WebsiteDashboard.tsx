@@ -45,6 +45,7 @@ const WebsiteDashboard = () => {
   const [dialogOpen, setDialogOpen] = useState(false);
   const [dialogType, setDialogType] = useState<WebArticleType>("news");
   const [loading, setLoading] = useState(true);
+  const [filters, setFilters] = useState<TaskFilters>({});
 
   const load = async () => {
     setLoading(true);
