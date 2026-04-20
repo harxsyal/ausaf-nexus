@@ -12,6 +12,7 @@ import SocialDashboard from "./pages/SocialDashboard.tsx";
 import WebsiteDashboard from "./pages/WebsiteDashboard.tsx";
 import ProductionDashboard from "./pages/ProductionDashboard.tsx";
 import AdminDashboard from "./pages/AdminDashboard.tsx";
+import CreateTask from "./pages/CreateTask.tsx";
 import NotFound from "./pages/NotFound.tsx";
 
 const queryClient = new QueryClient();
@@ -31,6 +32,7 @@ const App = () => (
             <Route path="/website" element={<ProtectedRoute allow={["website"]}><WebsiteDashboard /></ProtectedRoute>} />
             <Route path="/production" element={<ProtectedRoute allow={["production"]}><ProductionDashboard /></ProtectedRoute>} />
             <Route path="/admin" element={<ProtectedRoute allow={["super_admin"]}><AdminDashboard /></ProtectedRoute>} />
+            <Route path="/tasks/new" element={<ProtectedRoute><CreateTask /></ProtectedRoute>} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </AuthProvider>
