@@ -46,6 +46,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     const { data } = await supabase.rpc("get_user_role", { _user_id: uid });
     setRole((data as AppRole) ?? null);
     setLoading(false);
+    // Fire-and-forget heartbeat so admins see who's active
+    supabase.rpc("touch_last_active").then(() => {});
   };
 
   const signOut = async () => {
