@@ -100,15 +100,15 @@ const SocialDashboard = () => {
       <StatsGrid stats={stats} />
 
       {/* Quick action buttons */}
-      <section className="grid grid-cols-2 lg:grid-cols-4 gap-3">
+      <section className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-3">
         {QUICK.map((q) => (
           <button key={q.type} onClick={() => openDialog(q.type)}
             className="group flex items-center gap-3 p-4 border border-border bg-surface hover:border-primary/60 hover:bg-surface-elevated transition-colors text-left">
-            <div className="size-9 grid place-items-center bg-primary/10 text-primary border border-primary/30 group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
+            <div className="size-9 grid place-items-center bg-primary/10 text-primary border border-primary/30 group-hover:bg-primary group-hover:text-primary-foreground transition-colors shrink-0">
               <q.icon className="size-4" />
             </div>
-            <div>
-              <div className="text-sm font-semibold">{q.label}</div>
+            <div className="min-w-0">
+              <div className="text-sm font-semibold truncate">{q.label}</div>
               <div className="text-[10px] font-mono text-muted-foreground uppercase tracking-widest mt-0.5">+ Dispatch</div>
             </div>
           </button>

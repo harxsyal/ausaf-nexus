@@ -1,12 +1,12 @@
 interface Stat { label: string; value: string; meta?: string; tone?: "green" | "amber" | "red" | "muted"; }
 
 export const StatsGrid = ({ stats }: { stats: Stat[] }) => (
-  <div className="grid grid-cols-2 lg:grid-cols-4 gap-px bg-border border border-border">
+  <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-px bg-border border border-border">
     {stats.map((s) => (
-      <div key={s.label} className="bg-surface p-5">
-        <p className="text-[10px] font-mono text-muted-foreground uppercase tracking-widest mb-2">{s.label}</p>
-        <div className="flex items-baseline gap-2">
-          <span className="text-3xl font-light tabular-nums tracking-tight">{s.value}</span>
+      <div key={s.label} className="bg-surface p-4 sm:p-5">
+        <p className="text-[10px] font-mono text-muted-foreground uppercase tracking-widest mb-2 line-clamp-1">{s.label}</p>
+        <div className="flex items-baseline gap-2 flex-wrap">
+          <span className="text-2xl sm:text-3xl font-light tabular-nums tracking-tight">{s.value}</span>
           {s.meta && (
             <span className={`text-[10px] font-mono ${
               s.tone === "green" ? "text-signal-green" :

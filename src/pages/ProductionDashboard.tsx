@@ -96,7 +96,7 @@ const ProductionDashboard = () => {
       </div>
 
       {/* Kanban board */}
-      <div className="-mx-6 lg:-mx-8 px-6 lg:px-8 overflow-x-auto pb-4">
+      <div className="-mx-4 sm:-mx-6 lg:-mx-8 px-4 sm:px-6 lg:px-8 overflow-x-auto pb-4">
         <div className="flex gap-4 min-w-max">
           {COLUMNS.map((col) => {
             const items = grouped[col.stage];
