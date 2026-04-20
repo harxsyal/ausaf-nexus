@@ -156,13 +156,19 @@ export type Database = {
       }
       production_tasks: {
         Row: {
+          assigned_by: string | null
+          assigned_to: string | null
+          caption_draft: string | null
           created_at: string
           created_by: string | null
           deadline: string | null
+          description: string | null
           editor: string | null
           id: string
           notes: string | null
+          priority: Database["public"]["Enums"]["task_priority"]
           producer: string | null
+          publish_title_draft: string | null
           reporter: string | null
           source: string | null
           stage: Database["public"]["Enums"]["production_stage"]
@@ -171,13 +177,19 @@ export type Database = {
           updated_at: string
         }
         Insert: {
+          assigned_by?: string | null
+          assigned_to?: string | null
+          caption_draft?: string | null
           created_at?: string
           created_by?: string | null
           deadline?: string | null
+          description?: string | null
           editor?: string | null
           id?: string
           notes?: string | null
+          priority?: Database["public"]["Enums"]["task_priority"]
           producer?: string | null
+          publish_title_draft?: string | null
           reporter?: string | null
           source?: string | null
           stage?: Database["public"]["Enums"]["production_stage"]
@@ -186,13 +198,19 @@ export type Database = {
           updated_at?: string
         }
         Update: {
+          assigned_by?: string | null
+          assigned_to?: string | null
+          caption_draft?: string | null
           created_at?: string
           created_by?: string | null
           deadline?: string | null
+          description?: string | null
           editor?: string | null
           id?: string
           notes?: string | null
+          priority?: Database["public"]["Enums"]["task_priority"]
           producer?: string | null
+          publish_title_draft?: string | null
           reporter?: string | null
           source?: string | null
           stage?: Database["public"]["Enums"]["production_stage"]
@@ -244,14 +262,19 @@ export type Database = {
       social_tasks: {
         Row: {
           asset_page: string | null
+          assigned_by: string | null
           assigned_to: string | null
+          caption_draft: string | null
           created_at: string
           created_by: string | null
           deadline: string | null
+          description: string | null
           id: string
           notes: string | null
           platform: Database["public"]["Enums"]["social_platform"]
           priority: Database["public"]["Enums"]["task_priority"]
+          publish_title_draft: string | null
+          source: string | null
           status: Database["public"]["Enums"]["social_task_status"]
           task_type: Database["public"]["Enums"]["social_task_type"]
           title: string
@@ -259,14 +282,19 @@ export type Database = {
         }
         Insert: {
           asset_page?: string | null
+          assigned_by?: string | null
           assigned_to?: string | null
+          caption_draft?: string | null
           created_at?: string
           created_by?: string | null
           deadline?: string | null
+          description?: string | null
           id?: string
           notes?: string | null
           platform: Database["public"]["Enums"]["social_platform"]
           priority?: Database["public"]["Enums"]["task_priority"]
+          publish_title_draft?: string | null
+          source?: string | null
           status?: Database["public"]["Enums"]["social_task_status"]
           task_type?: Database["public"]["Enums"]["social_task_type"]
           title: string
@@ -274,14 +302,19 @@ export type Database = {
         }
         Update: {
           asset_page?: string | null
+          assigned_by?: string | null
           assigned_to?: string | null
+          caption_draft?: string | null
           created_at?: string
           created_by?: string | null
           deadline?: string | null
+          description?: string | null
           id?: string
           notes?: string | null
           platform?: Database["public"]["Enums"]["social_platform"]
           priority?: Database["public"]["Enums"]["task_priority"]
+          publish_title_draft?: string | null
+          source?: string | null
           status?: Database["public"]["Enums"]["social_task_status"]
           task_type?: Database["public"]["Enums"]["social_task_type"]
           title?: string
@@ -484,16 +517,23 @@ export type Database = {
       website_tasks: {
         Row: {
           article_type: Database["public"]["Enums"]["web_article_type"]
+          assigned_by: string | null
+          assigned_to: string | null
+          caption_draft: string | null
           category: string | null
           created_at: string
           created_by: string | null
           deadline: string | null
+          description: string | null
           editor: string | null
           headline: string
           id: string
           language: Database["public"]["Enums"]["web_language"]
           notes: string | null
+          priority: Database["public"]["Enums"]["task_priority"]
+          publish_title_draft: string | null
           site: string | null
+          source: string | null
           status: Database["public"]["Enums"]["web_task_status"]
           updated_at: string
           url: string | null
@@ -501,16 +541,23 @@ export type Database = {
         }
         Insert: {
           article_type?: Database["public"]["Enums"]["web_article_type"]
+          assigned_by?: string | null
+          assigned_to?: string | null
+          caption_draft?: string | null
           category?: string | null
           created_at?: string
           created_by?: string | null
           deadline?: string | null
+          description?: string | null
           editor?: string | null
           headline: string
           id?: string
           language?: Database["public"]["Enums"]["web_language"]
           notes?: string | null
+          priority?: Database["public"]["Enums"]["task_priority"]
+          publish_title_draft?: string | null
           site?: string | null
+          source?: string | null
           status?: Database["public"]["Enums"]["web_task_status"]
           updated_at?: string
           url?: string | null
@@ -518,16 +565,23 @@ export type Database = {
         }
         Update: {
           article_type?: Database["public"]["Enums"]["web_article_type"]
+          assigned_by?: string | null
+          assigned_to?: string | null
+          caption_draft?: string | null
           category?: string | null
           created_at?: string
           created_by?: string | null
           deadline?: string | null
+          description?: string | null
           editor?: string | null
           headline?: string
           id?: string
           language?: Database["public"]["Enums"]["web_language"]
           notes?: string | null
+          priority?: Database["public"]["Enums"]["task_priority"]
+          publish_title_draft?: string | null
           site?: string | null
+          source?: string | null
           status?: Database["public"]["Enums"]["web_task_status"]
           updated_at?: string
           url?: string | null
