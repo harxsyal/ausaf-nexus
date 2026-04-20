@@ -1,31 +1,48 @@
 import { ReactNode } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { useAuth, AppRole } from "@/context/AuthContext";
+import { useAuth, AppRole, roleHomePath } from "@/context/AuthContext";
 import {
-  LayoutDashboard, Share2, Globe, Clapperboard, ShieldCheck, LogOut,
+  LayoutDashboard, ListChecks, PlusSquare, Building2, FolderKanban,
+  Users, BarChart3, Bell, Settings, LogOut, type LucideIcon,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 
-const allNav: { label: string; path: string; icon: any; role: AppRole }[] = [
-  { label: "Social Media", path: "/social", icon: Share2, role: "social_media" },
-  { label: "Website", path: "/website", icon: Globe, role: "website" },
-  { label: "Digital Production", path: "/production", icon: Clapperboard, role: "production" },
-  { label: "Super Admin", path: "/admin", icon: ShieldCheck, role: "super_admin" },
+type NavItem = { label: string; path: string; icon: LucideIcon; allow: AppRole[] | "all" };
+
+// Permission matrix. Super Admin always sees everything.
+const NAV: NavItem[] = [
+  { label: "Dashboard",     path: "__home",         icon: LayoutDashboard, allow: "all" },
+  { label: "Tasks",         path: "/tasks",         icon: ListChecks,      allow: ["social_media", "website", "production"] },
+  { label: "Create Task",   path: "/tasks/new",     icon: PlusSquare,      allow: ["social_media", "website", "production"] },
+  { label: "Departments",   path: "/departments",   icon: Building2,       allow: [] },
+  { label: "Assets",        path: "/assets",        icon: FolderKanban,    allow: ["social_media", "website", "production"] },
+  { label: "Users",         path: "/users",         icon: Users,           allow: [] },
+  { label: "Reports",       path: "/reports",       icon: BarChart3,       allow: ["website"] },
+  { label: "Notifications", path: "/notifications", icon: Bell,            allow: "all" },
+  { label: "Settings",      path: "/settings",      icon: Settings,        allow: "all" },
 ];
 
 export const DashboardLayout = ({ children, title, dept }: { children: ReactNode; title: string; dept: string }) => {
   const { role, user, signOut } = useAuth();
   const location = useLocation();
 
-  const visibleNav = role === "super_admin" ? allNav : allNav.filter((n) => n.role === role);
+  const homePath = roleHomePath(role);
+  const isAllowed = (n: NavItem) =>
+    role === "super_admin" || n.allow === "all" ||
+    (Array.isArray(n.allow) && role !== null && n.allow.includes(role));
+
+  const visible = NAV.filter(isAllowed).map((n) => ({
+    ...n,
+    path: n.path === "__home" ? homePath : n.path,
+  }));
 
   const initials = (user?.email ?? "OP").slice(0, 2).toUpperCase();
   const now = new Date().toUTCString().split(" ")[4];
 
   return (
     <div className="flex min-h-screen bg-background text-foreground">
-      <aside className="w-64 border-r border-border bg-sidebar flex flex-col shrink-0">
+      <aside className="w-60 border-r border-border bg-sidebar flex flex-col shrink-0">
         <div className="p-5 border-b border-sidebar-border flex items-center gap-3">
           <div className="size-8 bg-primary grid place-items-center font-mono font-bold text-primary-foreground text-sm">A</div>
           <div className="leading-none">
@@ -34,36 +51,35 @@ export const DashboardLayout = ({ children, title, dept }: { children: ReactNode
           </div>
         </div>
 
-        <nav className="flex-1 p-4 space-y-6 mt-2">
-          <div>
-            <p className="text-[10px] font-mono text-muted-foreground uppercase tracking-wider mb-3 px-2">Operations</p>
-            <Link to={location.pathname}
-              className="flex items-center gap-3 px-3 py-2 text-sm font-medium bg-sidebar-accent text-sidebar-accent-foreground border-l-2 border-primary">
-              <LayoutDashboard className="size-4" /> Dashboard
-            </Link>
-          </div>
+        <nav className="flex-1 p-3 mt-2 overflow-y-auto">
+          <p className="text-[10px] font-mono text-muted-foreground uppercase tracking-wider mb-2 px-2">Workspace</p>
+          <ul className="space-y-0.5">
+            {visible.map((n) => {
+              const active = location.pathname === n.path;
+              return (
+                <li key={n.label}>
+                  <Link to={n.path}
+                    className={cn(
+                      "flex items-center gap-3 px-3 py-2 text-sm font-medium transition-colors border-l-2 rounded-sm",
+                      active
+                        ? "bg-sidebar-accent text-sidebar-accent-foreground border-primary"
+                        : "text-sidebar-foreground hover:text-foreground hover:bg-sidebar-accent/50 border-transparent"
+                    )}>
+                    <n.icon className="size-4 shrink-0" />
+                    <span className="truncate">{n.label}</span>
+                  </Link>
+                </li>
+              );
+            })}
+          </ul>
 
-          <div>
-            <p className="text-[10px] font-mono text-muted-foreground uppercase tracking-wider mb-3 px-2">Departments</p>
-            <ul className="space-y-1">
-              {visibleNav.map((n) => {
-                const active = location.pathname === n.path;
-                return (
-                  <li key={n.path}>
-                    <Link to={n.path}
-                      className={cn(
-                        "flex items-center gap-3 px-3 py-2 text-sm font-medium transition-colors",
-                        active
-                          ? "bg-sidebar-accent text-sidebar-accent-foreground border-l-2 border-primary"
-                          : "text-sidebar-foreground hover:text-foreground hover:bg-sidebar-accent/50 border-l-2 border-transparent"
-                      )}>
-                      <n.icon className="size-4" /> {n.label}
-                    </Link>
-                  </li>
-                );
-              })}
-            </ul>
-          </div>
+          {role === "super_admin" && (
+            <div className="mt-5 px-2">
+              <span className="inline-flex items-center gap-1.5 text-[9px] font-mono uppercase tracking-widest text-primary border border-primary/40 px-2 py-1 rounded-sm">
+                <span className="size-1.5 rounded-full bg-primary animate-pulse" /> Full Clearance
+              </span>
+            </div>
+          )}
         </nav>
 
         <div className="p-4 border-t border-sidebar-border bg-surface/40">
