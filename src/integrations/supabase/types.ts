@@ -424,6 +424,48 @@ export type Database = {
         }
         Relationships: []
       }
+      task_history: {
+        Row: {
+          action: string
+          actor_id: string | null
+          actor_label: string | null
+          created_at: string
+          field_name: string | null
+          id: string
+          ip_address: unknown
+          new_value: string | null
+          old_value: string | null
+          task_dept: Database["public"]["Enums"]["task_dept"]
+          task_id: string
+        }
+        Insert: {
+          action: string
+          actor_id?: string | null
+          actor_label?: string | null
+          created_at?: string
+          field_name?: string | null
+          id?: string
+          ip_address?: unknown
+          new_value?: string | null
+          old_value?: string | null
+          task_dept: Database["public"]["Enums"]["task_dept"]
+          task_id: string
+        }
+        Update: {
+          action?: string
+          actor_id?: string | null
+          actor_label?: string | null
+          created_at?: string
+          field_name?: string | null
+          id?: string
+          ip_address?: unknown
+          new_value?: string | null
+          old_value?: string | null
+          task_dept?: Database["public"]["Enums"]["task_dept"]
+          task_id?: string
+        }
+        Relationships: []
+      }
       task_proof: {
         Row: {
           caption: string | null
@@ -731,6 +773,7 @@ export type Database = {
       mark_all_notifications_read: { Args: never; Returns: undefined }
       profile_label: { Args: { _user: string }; Returns: string }
       resolve_user_by_label: { Args: { _label: string }; Returns: string }
+      scan_task_deadlines: { Args: never; Returns: undefined }
       touch_last_active: { Args: never; Returns: undefined }
       user_has_asset: {
         Args: { _asset: string; _user: string }
