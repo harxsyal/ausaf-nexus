@@ -7,6 +7,7 @@ import { CreateWebsiteTaskDialog, WebArticleType, WebLanguage }
 import { Newspaper, FileText, PenSquare, ImagePlus, ExternalLink } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { toast } from "sonner";
+import { TaskFilterBar, TaskFilters, applyTaskFilters } from "@/components/filters/TaskFilterBar";
 
 interface Row {
   id: string; headline: string; article_type: WebArticleType;
@@ -44,6 +45,7 @@ const WebsiteDashboard = () => {
   const [dialogOpen, setDialogOpen] = useState(false);
   const [dialogType, setDialogType] = useState<WebArticleType>("news");
   const [loading, setLoading] = useState(true);
+  const [filters, setFilters] = useState<TaskFilters>({});
 
   const load = async () => {
     setLoading(true);
@@ -70,6 +72,25 @@ const WebsiteDashboard = () => {
 
   const openDialog = (t: WebArticleType) => { setDialogType(t); setDialogOpen(true); };
 
+  const visible = useMemo(() => applyTaskFilters(rows, filters, {
+    status: (r) => r.status,
+    employee: (r) => r.writer || r.editor,
+    asset: (r) => r.category,
+    contentType: (r) => r.article_type,
+    deadline: (r) => r.deadline,
+  }), [rows, filters]);
+
+  const employeeOpts = useMemo(() => {
+    const s = new Set<string>();
+    rows.forEach((r) => { if (r.writer) s.add(r.writer); if (r.editor) s.add(r.editor); });
+    return Array.from(s).map((v) => ({ value: v, label: v }));
+  }, [rows]);
+
+  const categoryOpts = useMemo(() => {
+    const s = new Set(rows.map((r) => r.category).filter((x): x is string => !!x));
+    return Array.from(s).map((v) => ({ value: v, label: v }));
+  }, [rows]);
+
   return (
     <DashboardLayout dept="Website Desk" title="Editorial & Publishing Pipeline">
       <StatsGrid stats={stats} />
@@ -89,6 +110,29 @@ const WebsiteDashboard = () => {
           </button>
         ))}
       </section>
+
+      {/* Filters */}
+      <TaskFilterBar
+        value={filters}
+        onChange={setFilters}
+        show={{ department: false, platform: false, priority: false }}
+        options={{
+          statuses: [
+            { value: "draft", label: "Draft" },
+            { value: "in_review", label: "In Review" },
+            { value: "ready", label: "Ready" },
+            { value: "published", label: "Published" },
+            { value: "delayed", label: "Delayed" },
+          ],
+          employees: employeeOpts,
+          assets: categoryOpts,
+          contentTypes: [
+            { value: "news", label: "News" },
+            { value: "original", label: "Original" },
+            { value: "postcard", label: "Postcard" },
+          ],
+        }}
+      />
 
       {/* Table */}
       <section className="space-y-3">
@@ -113,14 +157,14 @@ const WebsiteDashboard = () => {
               {loading && (
                 <tr><td colSpan={8} className="px-4 py-8 text-center text-muted-foreground text-xs font-mono uppercase tracking-widest animate-pulse">Loading editorial queue…</td></tr>
               )}
-              {!loading && rows.length === 0 && (
+              {!loading && visible.length === 0 && (
                 <tr><td colSpan={8} className="px-4 py-12 text-center">
                   <FileText className="size-6 mx-auto text-muted-foreground mb-2 opacity-50" />
-                  <p className="text-sm text-muted-foreground">No articles yet.</p>
-                  <p className="text-[10px] font-mono text-muted-foreground uppercase tracking-widest mt-1">Use the quick actions above to start a draft.</p>
+                  <p className="text-sm text-muted-foreground">No articles match these filters.</p>
+                  <p className="text-[10px] font-mono text-muted-foreground uppercase tracking-widest mt-1">Adjust filters or dispatch a new draft.</p>
                 </td></tr>
               )}
-              {rows.map((r) => (
+              {visible.map((r) => (
                 <tr key={r.id} className="border-b border-border/50 hover:bg-secondary/40 transition-colors group">
                   <td className="px-4 py-4">
                     <p className="font-medium group-hover:text-primary transition-colors">{r.headline}</p>

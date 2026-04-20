@@ -9,6 +9,7 @@ import {
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { toast } from "sonner";
+import { TaskFilterBar, TaskFilters, applyTaskFilters } from "@/components/filters/TaskFilterBar";
 
 interface Card {
   id: string;
@@ -43,6 +44,7 @@ const ProductionDashboard = () => {
   const [cards, setCards] = useState<Card[]>([]);
   const [loading, setLoading] = useState(true);
   const [open, setOpen] = useState(false);
+  const [filters, setFilters] = useState<TaskFilters>({});
 
   const load = async () => {
     setLoading(true);
@@ -56,14 +58,33 @@ const ProductionDashboard = () => {
   };
   useEffect(() => { load(); }, []);
 
+  const visibleCards = useMemo(() => applyTaskFilters(cards, filters, {
+    status: (c) => c.stage,
+    employee: (c) => c.editor || c.producer || c.reporter,
+    asset: (c) => c.target_platform,
+    platform: (c) => c.target_platform,
+    deadline: (c) => c.deadline,
+  }), [cards, filters]);
+
+  const employeeOpts = useMemo(() => {
+    const s = new Set<string>();
+    cards.forEach((c) => { [c.editor, c.producer, c.reporter].forEach((x) => x && s.add(x)); });
+    return Array.from(s).map((v) => ({ value: v, label: v }));
+  }, [cards]);
+
+  const platformOpts = useMemo(() => {
+    const s = new Set(cards.map((c) => c.target_platform).filter((x): x is string => !!x));
+    return Array.from(s).map((v) => ({ value: v, label: v }));
+  }, [cards]);
+
   const grouped = useMemo(() => {
     const m: Record<ProductionStage, Card[]> = {
       idea_received: [], researching: [], shooting: [], voice_over: [],
       editing: [], ready: [], scheduled: [], published: [],
     };
-    cards.forEach((c) => m[c.stage].push(c));
+    visibleCards.forEach((c) => m[c.stage].push(c));
     return m;
-  }, [cards]);
+  }, [visibleCards]);
 
   const advance = async (card: Card) => {
     const idx = COLUMNS.findIndex((c) => c.stage === card.stage);
@@ -94,6 +115,19 @@ const ProductionDashboard = () => {
           <Plus className="size-3.5" /> New Production Task
         </button>
       </div>
+
+      {/* Filters */}
+      <TaskFilterBar
+        value={filters}
+        onChange={setFilters}
+        show={{ department: false, priority: false, contentType: false }}
+        options={{
+          statuses: COLUMNS.map((c) => ({ value: c.stage, label: c.label })),
+          employees: employeeOpts,
+          assets: platformOpts,
+          platforms: platformOpts,
+        }}
+      />
 
       {/* Kanban board */}
       <div className="-mx-4 sm:-mx-6 lg:-mx-8 px-4 sm:px-6 lg:px-8 overflow-x-auto pb-4">

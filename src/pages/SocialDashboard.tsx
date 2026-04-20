@@ -5,9 +5,10 @@ import { supabase } from "@/integrations/supabase/client";
 import { CreateSocialTaskDialog, SocialPlatform, SocialTaskType, TaskPriority }
   from "@/components/social/CreateSocialTaskDialog";
 import { Facebook, Youtube, Instagram, Music2, Hash, Newspaper, Image as ImgIcon,
-  Film, Megaphone, FileText, Filter as FilterIcon } from "lucide-react";
+  Film, Megaphone, FileText } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { toast } from "sonner";
+import { TaskFilterBar, TaskFilters, applyTaskFilters } from "@/components/filters/TaskFilterBar";
 
 interface Row {
   id: string; title: string; task_type: SocialTaskType; platform: SocialPlatform;
@@ -53,7 +54,7 @@ const fmtDeadline = (iso: string | null) => {
 
 const SocialDashboard = () => {
   const [rows, setRows] = useState<Row[]>([]);
-  const [filters, setFilters] = useState<Set<SocialPlatform>>(new Set());
+  const [filters, setFilters] = useState<TaskFilters>({});
   const [dialogOpen, setDialogOpen] = useState(false);
   const [dialogType, setDialogType] = useState<SocialTaskType>("post");
   const [loading, setLoading] = useState(true);
@@ -71,16 +72,25 @@ const SocialDashboard = () => {
 
   useEffect(() => { load(); }, []);
 
-  const togglePlatform = (p: SocialPlatform) => {
-    const next = new Set(filters);
-    next.has(p) ? next.delete(p) : next.add(p);
-    setFilters(next);
-  };
+  const visible = useMemo(() => applyTaskFilters(rows, filters, {
+    status: (r) => r.status,
+    employee: (r) => r.assigned_to,
+    asset: (r) => r.asset_page,
+    platform: (r) => r.platform,
+    priority: (r) => r.priority,
+    contentType: (r) => r.task_type,
+    deadline: (r) => r.deadline,
+  }), [rows, filters]);
 
-  const visible = useMemo(
-    () => filters.size === 0 ? rows : rows.filter((r) => filters.has(r.platform)),
-    [rows, filters]
-  );
+  const employeeOptions = useMemo(() => {
+    const ids = new Set(rows.map((r) => r.assigned_to).filter((x): x is string => !!x));
+    return Array.from(ids).map((id) => ({ value: id, label: id.slice(0, 8) + "…" }));
+  }, [rows]);
+
+  const assetOptions = useMemo(() => {
+    const a = new Set(rows.map((r) => r.asset_page).filter((x): x is string => !!x));
+    return Array.from(a).map((v) => ({ value: v, label: v }));
+  }, [rows]);
 
   const now = Date.now();
   const stats = useMemo(() => {
@@ -115,32 +125,31 @@ const SocialDashboard = () => {
         ))}
       </section>
 
-      {/* Filter row */}
-      <section className="flex flex-wrap items-center gap-2">
-        <span className="inline-flex items-center gap-1.5 text-[10px] font-mono uppercase tracking-widest text-muted-foreground mr-2">
-          <FilterIcon className="size-3" /> Platform
-        </span>
-        {PLATFORMS.map((p) => {
-          const active = filters.has(p.key);
-          return (
-            <button key={p.key} onClick={() => togglePlatform(p.key)}
-              className={cn(
-                "inline-flex items-center gap-2 px-3 py-1.5 text-xs font-medium border transition-colors",
-                active
-                  ? "bg-primary text-primary-foreground border-primary"
-                  : "bg-surface text-muted-foreground border-border hover:text-foreground hover:border-foreground/40"
-              )}>
-              <p.icon className="size-3.5" /> {p.label}
-            </button>
-          );
-        })}
-        {filters.size > 0 && (
-          <button onClick={() => setFilters(new Set())}
-            className="ml-2 text-[10px] font-mono uppercase tracking-widest text-muted-foreground hover:text-foreground">
-            Clear
-          </button>
-        )}
-      </section>
+      {/* Filters */}
+      <TaskFilterBar
+        value={filters}
+        onChange={setFilters}
+        show={{ department: false, contentType: true }}
+        options={{
+          statuses: [
+            { value: "pending", label: "Pending" },
+            { value: "in_progress", label: "In Progress" },
+            { value: "ready", label: "Ready" },
+            { value: "published", label: "Published" },
+            { value: "delayed", label: "Delayed" },
+          ],
+          employees: employeeOptions,
+          assets: assetOptions,
+          platforms: PLATFORMS.map((p) => ({ value: p.key, label: p.label })),
+          priorities: [
+            { value: "low", label: "Low" },
+            { value: "medium", label: "Medium" },
+            { value: "high", label: "High" },
+            { value: "urgent", label: "Urgent" },
+          ],
+          contentTypes: QUICK.map((q) => ({ value: q.type, label: q.type })),
+        }}
+      />
 
       {/* Task table */}
       <section className="space-y-3">
