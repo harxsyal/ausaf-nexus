@@ -7,6 +7,7 @@ import {
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
+import { NotificationBell } from "@/components/notifications/NotificationBell";
 
 type NavItem = { label: string; path: string; icon: LucideIcon; allow: AppRole[] | "all" };
 
@@ -109,6 +110,7 @@ export const DashboardLayout = ({ children, title, dept }: { children: ReactNode
             </div>
             <div className="hidden sm:block h-8 w-px bg-border" />
             <div className="hidden sm:block text-xs font-mono text-muted-foreground tabular-nums">UTC {now}</div>
+            <NotificationBell />
           </div>
         </header>
 

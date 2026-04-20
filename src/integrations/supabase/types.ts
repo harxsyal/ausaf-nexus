@@ -76,6 +76,48 @@ export type Database = {
         }
         Relationships: []
       }
+      notifications: {
+        Row: {
+          body: string | null
+          created_at: string
+          id: string
+          link: string | null
+          read: boolean
+          read_at: string | null
+          task_dept: Database["public"]["Enums"]["task_dept"] | null
+          task_id: string | null
+          title: string
+          type: Database["public"]["Enums"]["notification_type"]
+          user_id: string
+        }
+        Insert: {
+          body?: string | null
+          created_at?: string
+          id?: string
+          link?: string | null
+          read?: boolean
+          read_at?: string | null
+          task_dept?: Database["public"]["Enums"]["task_dept"] | null
+          task_id?: string | null
+          title: string
+          type: Database["public"]["Enums"]["notification_type"]
+          user_id: string
+        }
+        Update: {
+          body?: string | null
+          created_at?: string
+          id?: string
+          link?: string | null
+          read?: boolean
+          read_at?: string | null
+          task_dept?: Database["public"]["Enums"]["task_dept"] | null
+          task_id?: string | null
+          title?: string
+          type?: Database["public"]["Enums"]["notification_type"]
+          user_id?: string
+        }
+        Relationships: []
+      }
       production_tasks: {
         Row: {
           created_at: string
@@ -437,12 +479,21 @@ export type Database = {
         }
         Returns: boolean
       }
+      mark_all_notifications_read: { Args: never; Returns: undefined }
+      profile_label: { Args: { _user: string }; Returns: string }
+      resolve_user_by_label: { Args: { _label: string }; Returns: string }
       touch_last_active: { Args: never; Returns: undefined }
     }
     Enums: {
       account_status: "active" | "disabled"
       app_role: "super_admin" | "social_media" | "website" | "production"
       asset_status: "active" | "inactive"
+      notification_type:
+        | "new_task_assigned"
+        | "deadline_near"
+        | "overdue_task"
+        | "task_rejected"
+        | "task_published"
       production_stage:
         | "idea_received"
         | "researching"
@@ -595,6 +646,13 @@ export const Constants = {
       account_status: ["active", "disabled"],
       app_role: ["super_admin", "social_media", "website", "production"],
       asset_status: ["active", "inactive"],
+      notification_type: [
+        "new_task_assigned",
+        "deadline_near",
+        "overdue_task",
+        "task_rejected",
+        "task_published",
+      ],
       production_stage: [
         "idea_received",
         "researching",
