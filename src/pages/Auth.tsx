@@ -8,6 +8,7 @@ import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
 import { toast } from "sonner";
 import heroImg from "@/assets/newsroom-hero.jpg";
+import { Logo } from "@/components/Logo";
 import { Radio, ShieldCheck, Loader2 } from "lucide-react";
 
 const Auth = () => {
@@ -74,11 +75,9 @@ const Auth = () => {
         <div className="absolute inset-0 grid-tactical opacity-30" />
 
         <div className="relative z-10 flex items-center gap-3">
-          <div className="size-10 bg-primary grid place-items-center font-mono font-bold text-primary-foreground">
-            A
-          </div>
+          <Logo className="size-11" />
           <div className="leading-none">
-            <div className="text-sm font-bold tracking-tight">AUSAF DIGITAL</div>
+            <div className="text-sm font-bold tracking-tight">ABN DIGITAL</div>
             <div className="text-[10px] font-mono text-muted-foreground uppercase tracking-[0.25em] mt-1">
               Management System v1.0
             </div>
@@ -114,9 +113,9 @@ const Auth = () => {
       <div className="flex items-center justify-center p-6 sm:p-12 relative">
         <div className="w-full max-w-sm space-y-8">
           <div className="lg:hidden flex items-center gap-3">
-            <div className="size-9 bg-primary grid place-items-center font-mono font-bold text-primary-foreground">A</div>
+            <Logo className="size-10" />
             <div className="leading-none">
-              <div className="text-sm font-bold">AUSAF DIGITAL</div>
+              <div className="text-sm font-bold">ABN DIGITAL</div>
               <div className="text-[10px] font-mono text-muted-foreground uppercase tracking-[0.25em] mt-1">Mgmt System</div>
             </div>
           </div>
