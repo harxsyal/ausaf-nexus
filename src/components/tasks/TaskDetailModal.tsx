@@ -171,7 +171,7 @@ export const TaskDetailModal = ({ task, open, onOpenChange, onChanged }: Props) 
     if (!task || !data) return;
     setBusy("status");
     const update: any = { [STATUS_FIELD[task.dept]]: next };
-    const { error } = await supabase.from(TABLE[task.dept]).update(update).eq("id", task.id);
+    const { error } = await (supabase.from(TABLE[task.dept]) as any).update(update).eq("id", task.id);
     if (error) { setBusy(null); toast.error(error.message); return; }
     await writeEvent("status_change", `Status → ${next.replace(/_/g, " ")}`);
     toast.success("Status updated");
@@ -188,7 +188,7 @@ export const TaskDetailModal = ({ task, open, onOpenChange, onChanged }: Props) 
     const next = window.prompt("Reassign to (name / handle):", current);
     if (next === null) return;
     setBusy("reassign");
-    const { error } = await supabase.from(TABLE[task.dept]).update({ [field]: next || null }).eq("id", task.id);
+    const { error } = await (supabase.from(TABLE[task.dept]) as any).update({ [field]: next || null }).eq("id", task.id);
     if (error) { setBusy(null); toast.error(error.message); return; }
     await writeEvent("reassign", next ? `Reassigned to ${next}` : "Unassigned");
     toast.success("Reassigned");
@@ -207,7 +207,7 @@ export const TaskDetailModal = ({ task, open, onOpenChange, onChanged }: Props) 
     if (draft.notes !== undefined) patch.notes = draft.notes;
     if (draft.priority !== undefined && task.dept === "social") patch.priority = draft.priority;
     if (Object.keys(patch).length === 0) { setBusy(null); setEditing(false); return; }
-    const { error } = await supabase.from(TABLE[task.dept]).update(patch).eq("id", task.id);
+    const { error } = await (supabase.from(TABLE[task.dept]) as any).update(patch).eq("id", task.id);
     if (error) { setBusy(null); toast.error(error.message); return; }
     await writeEvent("edit", `Edited ${Object.keys(patch).join(", ")}`);
     toast.success("Saved");
