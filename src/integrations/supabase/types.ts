@@ -385,6 +385,27 @@ export type Database = {
         }
         Relationships: []
       }
+      user_job_roles: {
+        Row: {
+          created_at: string
+          id: string
+          job_role: Database["public"]["Enums"]["job_role"]
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          job_role: Database["public"]["Enums"]["job_role"]
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          job_role?: Database["public"]["Enums"]["job_role"]
+          user_id?: string
+        }
+        Relationships: []
+      }
       user_roles: {
         Row: {
           created_at: string
@@ -522,6 +543,13 @@ export type Database = {
           username: string
         }[]
       }
+      admin_set_user_job_roles: {
+        Args: {
+          _roles: Database["public"]["Enums"]["job_role"][]
+          _user_id: string
+        }
+        Returns: undefined
+      }
       admin_set_user_role: {
         Args: {
           _role: Database["public"]["Enums"]["app_role"]
@@ -543,9 +571,27 @@ export type Database = {
       can_access_production: { Args: { _user: string }; Returns: boolean }
       can_access_social: { Args: { _user: string }; Returns: boolean }
       can_access_website: { Args: { _user: string }; Returns: boolean }
+      get_user_job_roles: {
+        Args: { _user_id: string }
+        Returns: Database["public"]["Enums"]["job_role"][]
+      }
       get_user_role: {
         Args: { _user_id: string }
         Returns: Database["public"]["Enums"]["app_role"]
+      }
+      has_job_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["job_role"]
+          _user_id: string
+        }
+        Returns: boolean
+      }
+      has_permission: {
+        Args: {
+          _perm: Database["public"]["Enums"]["app_permission"]
+          _user_id: string
+        }
+        Returns: boolean
       }
       has_role: {
         Args: {
@@ -565,8 +611,26 @@ export type Database = {
     }
     Enums: {
       account_status: "active" | "disabled"
+      app_permission:
+        | "create_task"
+        | "edit_task"
+        | "assign_task"
+        | "reassign_task"
+        | "publish_task"
+        | "view_all_tasks"
+        | "manage_users"
+        | "manage_assets"
       app_role: "super_admin" | "social_media" | "website" | "production"
       asset_status: "active" | "inactive"
+      job_role:
+        | "super_admin"
+        | "department_head"
+        | "publisher"
+        | "editor"
+        | "designer"
+        | "writer"
+        | "reporter"
+        | "viewer"
       notification_type:
         | "new_task_assigned"
         | "deadline_near"
@@ -724,8 +788,28 @@ export const Constants = {
   public: {
     Enums: {
       account_status: ["active", "disabled"],
+      app_permission: [
+        "create_task",
+        "edit_task",
+        "assign_task",
+        "reassign_task",
+        "publish_task",
+        "view_all_tasks",
+        "manage_users",
+        "manage_assets",
+      ],
       app_role: ["super_admin", "social_media", "website", "production"],
       asset_status: ["active", "inactive"],
+      job_role: [
+        "super_admin",
+        "department_head",
+        "publisher",
+        "editor",
+        "designer",
+        "writer",
+        "reporter",
+        "viewer",
+      ],
       notification_type: [
         "new_task_assigned",
         "deadline_near",
