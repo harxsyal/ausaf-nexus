@@ -64,23 +64,35 @@ export type Database = {
       }
       profiles: {
         Row: {
+          allowed_assets: string[]
           created_at: string
+          department: string | null
           full_name: string | null
           id: string
+          last_active: string | null
+          status: Database["public"]["Enums"]["account_status"]
           updated_at: string
           username: string | null
         }
         Insert: {
+          allowed_assets?: string[]
           created_at?: string
+          department?: string | null
           full_name?: string | null
           id: string
+          last_active?: string | null
+          status?: Database["public"]["Enums"]["account_status"]
           updated_at?: string
           username?: string | null
         }
         Update: {
+          allowed_assets?: string[]
           created_at?: string
+          department?: string | null
           full_name?: string | null
           id?: string
+          last_active?: string | null
+          status?: Database["public"]["Enums"]["account_status"]
           updated_at?: string
           username?: string | null
         }
@@ -316,6 +328,35 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      admin_list_users: {
+        Args: never
+        Returns: {
+          allowed_assets: string[]
+          created_at: string
+          department: string
+          email: string
+          full_name: string
+          id: string
+          last_active: string
+          role: Database["public"]["Enums"]["app_role"]
+          status: Database["public"]["Enums"]["account_status"]
+          username: string
+        }[]
+      }
+      admin_set_user_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: undefined
+      }
+      admin_set_user_status: {
+        Args: {
+          _status: Database["public"]["Enums"]["account_status"]
+          _user_id: string
+        }
+        Returns: undefined
+      }
       can_access_dept: {
         Args: { _dept: Database["public"]["Enums"]["task_dept"]; _user: string }
         Returns: boolean
@@ -334,8 +375,10 @@ export type Database = {
         }
         Returns: boolean
       }
+      touch_last_active: { Args: never; Returns: undefined }
     }
     Enums: {
+      account_status: "active" | "disabled"
       app_role: "super_admin" | "social_media" | "website" | "production"
       production_stage:
         | "idea_received"
@@ -486,6 +529,7 @@ export type CompositeTypes<
 export const Constants = {
   public: {
     Enums: {
+      account_status: ["active", "disabled"],
       app_role: ["super_admin", "social_media", "website", "production"],
       production_stage: [
         "idea_received",
