@@ -58,14 +58,33 @@ const ProductionDashboard = () => {
   };
   useEffect(() => { load(); }, []);
 
+  const visibleCards = useMemo(() => applyTaskFilters(cards, filters, {
+    status: (c) => c.stage,
+    employee: (c) => c.editor || c.producer || c.reporter,
+    asset: (c) => c.target_platform,
+    platform: (c) => c.target_platform,
+    deadline: (c) => c.deadline,
+  }), [cards, filters]);
+
+  const employeeOpts = useMemo(() => {
+    const s = new Set<string>();
+    cards.forEach((c) => { [c.editor, c.producer, c.reporter].forEach((x) => x && s.add(x)); });
+    return Array.from(s).map((v) => ({ value: v, label: v }));
+  }, [cards]);
+
+  const platformOpts = useMemo(() => {
+    const s = new Set(cards.map((c) => c.target_platform).filter((x): x is string => !!x));
+    return Array.from(s).map((v) => ({ value: v, label: v }));
+  }, [cards]);
+
   const grouped = useMemo(() => {
     const m: Record<ProductionStage, Card[]> = {
       idea_received: [], researching: [], shooting: [], voice_over: [],
       editing: [], ready: [], scheduled: [], published: [],
     };
-    cards.forEach((c) => m[c.stage].push(c));
+    visibleCards.forEach((c) => m[c.stage].push(c));
     return m;
-  }, [cards]);
+  }, [visibleCards]);
 
   const advance = async (card: Card) => {
     const idx = COLUMNS.findIndex((c) => c.stage === card.stage);
