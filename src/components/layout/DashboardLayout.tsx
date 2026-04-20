@@ -9,6 +9,7 @@ import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { NotificationBell } from "@/components/notifications/NotificationBell";
 import { ThemeToggle } from "@/components/theme/ThemeToggle";
+import { Logo } from "@/components/Logo";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 
 type NavItem = { label: string; path: string; icon: LucideIcon; allow: AppRole[] | "all" };
@@ -46,9 +47,9 @@ export const DashboardLayout = ({ children, title, dept }: { children: ReactNode
   const SidebarBody = (
     <>
       <div className="p-5 border-b border-sidebar-border flex items-center gap-3">
-        <div className="size-8 bg-primary grid place-items-center font-mono font-bold text-primary-foreground text-sm">A</div>
+        <Logo className="size-9" />
         <div className="leading-none">
-          <div className="text-xs font-bold tracking-tight">AUSAF DIGITAL</div>
+          <div className="text-xs font-bold tracking-tight">ABN DIGITAL</div>
           <div className="text-[9px] font-mono text-muted-foreground uppercase tracking-[0.2em] mt-1">Mgmt v1.0</div>
         </div>
       </div>

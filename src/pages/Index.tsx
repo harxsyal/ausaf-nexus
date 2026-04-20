@@ -12,7 +12,7 @@ const Index = () => {
   return (
     <div className="min-h-screen grid place-items-center bg-background">
       <div className="font-mono text-xs text-muted-foreground uppercase tracking-widest animate-pulse">
-        Initializing Ausaf Digital…
+        Initializing ABN Digital…
       </div>
     </div>
   );
