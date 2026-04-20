@@ -14,6 +14,7 @@ import ProductionDashboard from "./pages/ProductionDashboard.tsx";
 import AdminDashboard from "./pages/AdminDashboard.tsx";
 import CreateTask from "./pages/CreateTask.tsx";
 import Users from "./pages/Users.tsx";
+import Assets from "./pages/Assets.tsx";
 import NotFound from "./pages/NotFound.tsx";
 
 const queryClient = new QueryClient();
@@ -35,6 +36,7 @@ const App = () => (
             <Route path="/admin" element={<ProtectedRoute allow={["super_admin"]}><AdminDashboard /></ProtectedRoute>} />
             <Route path="/tasks/new" element={<ProtectedRoute><CreateTask /></ProtectedRoute>} />
             <Route path="/users" element={<ProtectedRoute allow={["super_admin"]}><Users /></ProtectedRoute>} />
+            <Route path="/assets" element={<ProtectedRoute><Assets /></ProtectedRoute>} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </AuthProvider>

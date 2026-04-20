@@ -14,6 +14,68 @@ export type Database = {
   }
   public: {
     Tables: {
+      asset_users: {
+        Row: {
+          asset_id: string
+          created_at: string
+          user_id: string
+        }
+        Insert: {
+          asset_id: string
+          created_at?: string
+          user_id: string
+        }
+        Update: {
+          asset_id?: string
+          created_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "asset_users_asset_id_fkey"
+            columns: ["asset_id"]
+            isOneToOne: false
+            referencedRelation: "assets"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      assets: {
+        Row: {
+          brand: string | null
+          created_at: string
+          created_by: string | null
+          id: string
+          name: string
+          notes: string | null
+          platform: string | null
+          status: Database["public"]["Enums"]["asset_status"]
+          updated_at: string
+        }
+        Insert: {
+          brand?: string | null
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          name: string
+          notes?: string | null
+          platform?: string | null
+          status?: Database["public"]["Enums"]["asset_status"]
+          updated_at?: string
+        }
+        Update: {
+          brand?: string | null
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          name?: string
+          notes?: string | null
+          platform?: string | null
+          status?: Database["public"]["Enums"]["asset_status"]
+          updated_at?: string
+        }
+        Relationships: []
+      }
       production_tasks: {
         Row: {
           created_at: string
@@ -380,6 +442,7 @@ export type Database = {
     Enums: {
       account_status: "active" | "disabled"
       app_role: "super_admin" | "social_media" | "website" | "production"
+      asset_status: "active" | "inactive"
       production_stage:
         | "idea_received"
         | "researching"
@@ -531,6 +594,7 @@ export const Constants = {
     Enums: {
       account_status: ["active", "disabled"],
       app_role: ["super_admin", "social_media", "website", "production"],
+      asset_status: ["active", "inactive"],
       production_stage: [
         "idea_received",
         "researching",
