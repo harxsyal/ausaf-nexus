@@ -44,6 +44,7 @@ const ProductionDashboard = () => {
   const [cards, setCards] = useState<Card[]>([]);
   const [loading, setLoading] = useState(true);
   const [open, setOpen] = useState(false);
+  const [filters, setFilters] = useState<TaskFilters>({});
 
   const load = async () => {
     setLoading(true);
