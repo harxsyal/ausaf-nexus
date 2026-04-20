@@ -7,6 +7,7 @@ import { CreateWebsiteTaskDialog, WebArticleType, WebLanguage }
 import { Newspaper, FileText, PenSquare, ImagePlus, ExternalLink } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { toast } from "sonner";
+import { TaskFilterBar, TaskFilters, applyTaskFilters } from "@/components/filters/TaskFilterBar";
 
 interface Row {
   id: string; headline: string; article_type: WebArticleType;
