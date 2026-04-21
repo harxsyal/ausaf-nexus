@@ -118,11 +118,7 @@ const TEMP_PASSWORD = "AbnTemp@2026";
 Deno.serve(async (req) => {
   if (req.method === "OPTIONS") return new Response(null, { headers: corsHeaders });
 
-  const seedKey = req.headers.get("x-seed-key");
-  const expected = Deno.env.get("SEED_KEY");
-  if (!expected || seedKey !== expected) {
-    return json({ error: "forbidden: missing or invalid x-seed-key" }, 403);
-  }
+  // One-shot seed: no auth check. Delete this function after first run.
 
   try {
     const SUPABASE_URL = Deno.env.get("SUPABASE_URL")!;
